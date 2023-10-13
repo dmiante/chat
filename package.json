@@ -1,0 +1,19 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch ./server/index.js"
+  },
+  "keywords": [],
+  "author": "Dmiante",
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.18.2",
+    "morgan": "^1.10.0",
+    "socket.io": "4.7.2",
+    "socket.io-client": "^4.7.2"
+  }
+}
