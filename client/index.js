@@ -7,7 +7,7 @@ const form = document.getElementById('form')
 const input = document.getElementById('input')
 const messages = document.getElementById('messages')
 
-socket.on('chat message', (msg) => {
+socket.on('message', (msg) => {
   const item = `<li>${msg}</li>`
   messages.insertAdjacentHTML('beforeend', item)
 })
@@ -15,8 +15,9 @@ socket.on('chat message', (msg) => {
 form.addEventListener('submit', (e) => {
   e.preventDefault()
 
-  if(input.value){
-    socket.emit('chat message', input.value)
+  const messageContent = input.value
+  if(messageContent){
+    socket.emit('chat message', messageContent)
     input.value = ''
   }
 })
