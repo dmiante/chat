@@ -24,7 +24,7 @@ app.use(express.static(path.join(process.cwd(), "client")))
 app.use(logger('dev'))
 
 
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
   console.log('An user has connected!')
 
   socket.on('disconnect', () => {
@@ -43,12 +43,16 @@ io.on('connection', (socket) => {
     io.emit('message', msg)
   })
 
-  // const loadNotes = async () => {
-  //   const notes = await Message.find()
-  //   io.emit('loadnotes', notes)
-  //   console.log(notes)
-  // }
-  // loadNotes()
+  if (!socket.recovered) { // <- recuperase los mensajes sin conexión
+    try {
+      const msgs = await Message.find()
+      msgs.forEach(({ message }) => {
+        io.emit('message', message)
+      })
+    } catch (e) {
+      console.error(e)
+    }
+  }
 })
 
 server.listen(PORT, () => {
